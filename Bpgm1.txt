@@ -1,0 +1,43 @@
+# Import libraries
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+
+# Step 1: Load dataset
+df = pd.read_csv("PlayTennis.csv")
+print("Dataset:\n", df)
+
+# Step 2: Split features and target
+target = df.columns[-1]      # last column is target (Play)
+X = df.drop(columns=[target])
+y = df[target]
+
+# Step 3: Convert categorical data to numeric (One-Hot Encoding)
+X = pd.get_dummies(X)
+print("\nEncoded Features:\n", X)
+
+# Step 4: Train Decision Tree using ID3 (entropy)
+model = DecisionTreeClassifier(criterion='entropy', random_state=0)
+model.fit(X, y)
+
+# Step 5: Visualize the tree
+plt.figure(figsize=(10,6))
+plot_tree(model, feature_names=X.columns, class_names=model.classes_, filled=True)
+plt.title("Decision Tree using ID3 Algorithm")
+plt.show()
+
+# Step 6: Classify a new sample
+new_sample = pd.DataFrame({
+    'Outlook': ['Sunny'],
+    'Temperature': ['Hot'],
+    'Humidity': ['High'],
+    'Wind': ['Weak']
+})
+
+# Encode new sample to match training columns
+new_sample_enc = pd.get_dummies(new_sample)
+new_sample_enc = new_sample_enc.reindex(columns=X.columns, fill_value=0)
+
+prediction = model.predict(new_sample_enc)
+print("\nNew Sample:\n", new_sample)
+print("Predicted Class:", prediction)

@@ -1,0 +1,56 @@
+# Import Libraries
+import numpy as np
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, confusion_matrix
+
+# Load dataset (Iris)
+data = load_iris()
+X = data.data
+y = data.target
+
+# Convert to binary classification (remove class 2)
+X = X[y != 2]
+y = y[y != 2]
+
+# Split train-test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+
+# KNN Model
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train, y_train)
+
+# Predict
+y_pred = knn.predict(X_test)
+
+# Accuracy, Precision, Recall
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+
+# Lift Calculation
+tn, fp, fn, tp = confusion_matrix(y_test, y_pred).ravel()
+tpr = tp / (tp + fn)                     # True Positive Rate = Recall
+random_rate = (tp + fn) / len(y_test)    # proportion of positives
+lift = tpr / random_rate
+
+# Print Results
+print("KNN Results:")
+print("Accuracy :", accuracy)
+print("Precision:", precision)
+print("Recall   :", recall)
+print("Lift     :", lift)
+
+# Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+print("\nConfusion Matrix:")
+print(cm)
+
+print("\nTN:", tn)
+print("FP:", fp)
+print("FN:", fn)
+print("TP:", tp)

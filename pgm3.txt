@@ -1,0 +1,36 @@
+# Import Libraries
+import pandas as pd
+import numpy as np
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import LabelEncoder, StandardScaler, MinMaxScaler
+
+# Step 1: Create Sample Dataset
+data = {
+    'Name': ['Ravi', 'Priya', 'Amit', 'Neha', np.nan, 'Suresh'],
+    'Age': [25, 30, np.nan, 28, 22, 35],
+    'Department': ['IT', 'HR', 'Finance', 'IT', 'Finance', 'HR'],
+    'Salary': [50000, 60000, 58000, np.nan, 52000, 61000]
+}
+
+df = pd.DataFrame(data)
+print("Original Dataset:\n", df)
+
+# Step 2: Check Missing Values
+print("\nMissing Values:\n", df.isnull().sum())
+
+# Step 3: Data Cleaning (Handling Missing Values)
+df[['Age', 'Salary']] = SimpleImputer(strategy='mean').fit_transform(df[['Age', 'Salary']])
+df[['Name']] = SimpleImputer(strategy='most_frequent').fit_transform(df[['Name']])
+print("\nAfter Cleaning:\n", df)
+
+# Step 4: Label Encoding
+df['Dept_encoded'] = LabelEncoder().fit_transform(df['Department'])
+print("\nAfter Label Encoding:\n", df)
+
+# Step 5: Standardization
+df[['Age_std', 'Salary_std']] = StandardScaler().fit_transform(df[['Age', 'Salary']])
+print("\nAfter Standardization:\n", df)
+
+# Step 6: Normalization
+df[['Age_norm', 'Salary_norm']] = MinMaxScaler().fit_transform(df[['Age', 'Salary']])
+print("\nAfter Normalization:\n", df)

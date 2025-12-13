@@ -1,0 +1,33 @@
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans, AgglomerativeClustering
+from sklearn.metrics import silhouette_score, adjusted_rand_score
+import pandas as pd
+
+# Load dataset
+iris = load_iris()
+X = iris.data
+y_true = iris.target   # real labels for comparison
+
+# ---- K-Means ----
+kmeans = KMeans(n_clusters=3, random_state=42)
+kmeans_labels = kmeans.fit_predict(X)
+
+# ---- Agglomerative Clustering ----
+agg = AgglomerativeClustering(n_clusters=3)
+agg_labels = agg.fit_predict(X)
+
+# ---- Metrics ----
+sil_kmeans = silhouette_score(X, kmeans_labels)
+sil_agg = silhouette_score(X, agg_labels)
+
+ari_kmeans = adjusted_rand_score(y_true, kmeans_labels)
+ari_agg = adjusted_rand_score(y_true, agg_labels)
+
+# ---- Compare Results ----
+results = pd.DataFrame({
+    "Algorithm": ["K-Means", "Agglomerative"],
+    "Silhouette Score": [sil_kmeans, sil_agg],
+    "Adjusted Rand Index": [ari_kmeans, ari_agg]
+})
+
+print(results)

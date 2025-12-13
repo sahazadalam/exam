@@ -1,0 +1,23 @@
+# Import libraries
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.feature_selection import SelectKBest, chi2
+
+# Load dataset
+iris = load_iris()
+X = pd.DataFrame(iris.data, columns=iris.feature_names)
+y = iris.target
+
+print("Original Features:\n", X.head())
+
+# Select top 2 features using SelectKBest
+selector = SelectKBest(score_func=chi2, k=2)
+X_new = selector.fit_transform(X, y)
+
+# Get selected feature names
+selected_features = X.columns[selector.get_support(indices=True)]
+
+print("\nSelected Features:")
+print(selected_features)
+
+print("\nTransformed Dataset (Top 2 Features):\n", X_new[:5])

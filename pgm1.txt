@@ -1,0 +1,29 @@
+# 1. Import required libraries
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+
+# 2. Load the dataset
+df = pd.read_csv("iris.csv")
+
+# 3. Separate features and target
+X = df.drop("Species", axis=1)
+y = df["Species"]
+
+# 4. Pre-process the data
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+le = LabelEncoder()
+y = le.fit_transform(y)
+
+# 5. Split into train and test data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+
+# Print output
+print("Training Features:\n", X_train)
+print("Testing Features:\n", X_test)
+print("Training Labels:\n", y_train)
+print("Testing Labels:\n", y_test)
