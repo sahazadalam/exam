@@ -33,3 +33,127 @@ y_pred = model.predict(X_test)
 # Step 7: Show classification report
 print("\nClassification Report:\n")
 print(classification_report(y_test, y_pred))
+
+
+
+
+
+
+
+
+1. Login.html
+
+<!DOCTYPE html>
+
+<html ng-app>
+
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+
+<body>
+
+Username: <input type="text" ng-model="u"><br><br>
+
+Password: <input type="password" ng-model="p"><br><br>
+
+{{ (u=='admin' && p=='1234') ? 'Login Successful' : 'Invalid Login' }}
+
+</body>
+
+</html>
+
+2.Calculator.html
+
+<!DOCTYPE html>
+
+<html ng-app>
+
+<head>
+
+<title>Calculator</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+
+<body>
+
+<input type="number" ng-model="a">
+
+<input type="number" ng-model="b"><br><br>
+
+Addition: {{a + b}}<br>
+
+Subtraction: {{a - b}}<br>
+
+Multiplication: {{a * b}}<br>
+
+Division: {{a / b}}<br>
+
+</body>
+
+</html>
+
+3. Students.html
+
+<html ng-app>
+
+<head>
+
+<title>Student Details</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+
+<body>
+
+Name: <input type="text" ng-model="name"><br>
+
+SRN: <input type="text" ng-model="srn"><br>
+
+Branch: <input type="text" ng-model="branch"><br>
+
+<h3>Student Information</h3>
+
+Name: {{name}} <br>
+
+SRN: {{srn}} <br>
+
+Branch: {{branch}}
+
+</body>
+
+</html>
+
+4. Two-way.html
+
+<!DOCTYPE html>
+
+<html ng-app>
+
+<head>
+
+<title>Two Way Binding</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+</head>
+
+<body>
+
+Enter Name:
+
+<input type="text" ng-model="name">
+
+<h3>{{name}}</h3>
+
+</body>
+
+</html>
+
+
+
